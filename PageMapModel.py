@@ -20,16 +20,19 @@ class PageMap:
         num_free_frames = (self.frame_state == 0).sum()
         np.random.shuffle(process_page)
         flage = True
-        print(process_page_num,process_page,num_free_frames,self.frame_state == 0,self.frame_state)
+        print(process_page_num,process_page,num_free_frames,
+              self.frame_state == 0,self.frame_state,self.frame_value)
         if process_page_num >= num_free_frames:
             self.frame_value[self.frame_state == 0] = process_page[:num_free_frames]
             map_page = (self.frames[self.frame_state == 0].tolist())
             self.frame_state[self.frame_state == 0] = 1
         else:
-            self.frame_value = self.frame_value[self.frame_state == 0]
-            self.frame_value[:process_page_num] = process_page[:]
-            self.frame_state = self.frame_state[self.frame_state == 0]
-            self.frame_state[:process_page_num] = 1
+            tem = self.frame_value[self.frame_state == 0]
+            tem[:process_page_num] = process_page[:]
+            self.frame_value[self.frame_state == 0]=tem
+            tem = self.frame_state[self.frame_state == 0]
+            tem[:process_page_num] = 1
+            self.frame_state[self.frame_state == 0] = tem
             map_page = (self.frames[:process_page_num].tolist())
 
         print(self.frame_value,self.frame_state)
