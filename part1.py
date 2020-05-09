@@ -7,9 +7,10 @@ from PageMapModel import *
 information, table = read_data()
 physical_mem_size, page_size, round_Q, CS = information
 
-# TODO sort the data by Arrival Time to make the table suitable for pressing
-table = table.sort_values(by=['Arrival Time'])
+
+table = table.sort_values(by=['Arrival Time']).reset_index(drop=True)
 
 frame_num = int(physical_mem_size/page_size) # number of frame
 ready_queue = []
+# TODO start of part one of the project
 
