@@ -1,6 +1,7 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 from util.Preprocessor import *
+from PageMapModel import *
 
 # read the data and and put it in a table
 information, table = read_data()
@@ -12,4 +13,3 @@ table = table.sort_values(by=['Arrival Time'])
 frame_num = int(physical_mem_size/page_size) # number of frame
 ready_queue = []
 
-for i in range(table.size):
