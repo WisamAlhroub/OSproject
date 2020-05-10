@@ -29,12 +29,11 @@ class PageMap:
         else:
             tem = self.frame_value[self.frame_state == 0]
             tem[:process_page_num] = process_page[:]
-            self.frame_value[self.frame_state == 0]=tem
+            self.frame_value[self.frame_state == 0] = tem
             tem = self.frame_state[self.frame_state == 0]
             tem[:process_page_num] = 1
             self.frame_state[self.frame_state == 0] = tem
             map_page = (self.frames[:process_page_num].tolist())
-
 
         if process_page_num > num_free_frames:
             map_page += (['HDD'] * int(process_page_num - num_free_frames))
