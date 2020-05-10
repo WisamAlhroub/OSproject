@@ -1,5 +1,6 @@
 import numpy as np
 import pandas as pd
+import warnings
 
 
 class PageMap:
@@ -20,8 +21,7 @@ class PageMap:
         num_free_frames = (self.frame_state == 0).sum()
         np.random.shuffle(process_page)
         flage = True
-        print(process_page_num,process_page,num_free_frames,
-              self.frame_state == 0,self.frame_state,self.frame_value)
+
         if process_page_num >= num_free_frames:
             self.frame_value[self.frame_state == 0] = process_page[:num_free_frames]
             map_page = (self.frames[self.frame_state == 0].tolist())
@@ -35,7 +35,7 @@ class PageMap:
             self.frame_state[self.frame_state == 0] = tem
             map_page = (self.frames[:process_page_num].tolist())
 
-        print(self.frame_value,self.frame_state)
+
         if process_page_num > num_free_frames:
             map_page += (['HDD'] * int(process_page_num - num_free_frames))
             flage = False
@@ -49,14 +49,14 @@ class PageMap:
             'map-value': np.array(map_page),
             'valid': valid
         }
-        self.pt=page_table
-        self.map=map_page
-        print(page_table,map_page)
+
         return pd.DataFrame(page_table).sort_values(by='page-number')
 
     def remove_process(self, page_table):
         mem_frame = page_table["map-value"].to_numpy()
-        mem_frame = mem_frame[mem_frame != 'HDD'].astype(int)
+        with warnings.catch_warnings():
+            warnings.simplefilter(action='ignore', category=FutureWarning)
+            mem_frame = mem_frame[mem_frame != 'HDD'].astype(int)
 
         self.frame_state.put(mem_frame, 0)
         self.frame_value.put(mem_frame, 0)
