@@ -4,5 +4,5 @@ This is a repository for implementing Operating Systems' scheduling methods usin
 
 ## Members of the Project
 
-@WisamAlhroub
-@Mohammed-samaheen
+1. @WisamAlhroub
+2. @Mohammed-samaheen
